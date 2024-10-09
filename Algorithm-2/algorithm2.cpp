@@ -29,7 +29,6 @@ int findStartingCity(const vector<int>& city_distances, const vector<int>& fuel,
 }
 
 int main() {
-    // Sample data for testing
     vector<int> city_distances = {5, 25, 15, 10, 15};
     vector<int> fuel = {1, 2, 1, 0, 3};
     int mpg = 10;
