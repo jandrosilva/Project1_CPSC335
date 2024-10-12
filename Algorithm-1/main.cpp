@@ -99,31 +99,43 @@ void display_vector(vector<int>& row)
 	std::cout << endl;
 }
 
-//Swap algorithm in linear time using 2 pointer variables.
-int swap_vector(vector<int>& row)
+//Swap algorithm in linear time using 2 find() variables.
+int swap_vector(std::vector<int>& row) 
 {
-	int swap_count = 0; //tracks the count of swaps
-	int base = 0;//tracks the base integer being compared
-	int point = 0; //tracks the integer being compared to base_value
+	int swap_count = 0; // Tracks the count of swaps
+	int n = row.size();
 
-	while (base < (row.size() - 2)) 
-	{
-		if (row[base + 1] == PAIRS.at(row[base]) || row[base] == PAIRS.at(row[base + 1]))
-		{
-			base = base + 2;
-			break;
+	// Map to track positions of elements
+	std::unordered_map<int, int> positions;
+
+	// Populate the map with element indices
+	for (int i = 0; i < n; ++i) {
+		positions[row[i]] = i;
+	}
+
+	// for loop is O (n/2) because it iterates forward every 2 indicies
+	for (int base = 0; base < n - 1; base += 2) {
+		if (base + 1 < n && (row[base + 1] == PAIRS.at(row[base]) || row[base] == PAIRS.at(row[base + 1]))) {
+			continue; // Already paired
 		}
 
-		// for loop begins if the couple is not paired together
-		for (point = base + 2; point < row.size(); point++) {
-			if (row[point] == PAIRS.at(row[base]) || row[base] == PAIRS.at(row[point])) 
+		// Find the position of the pair for row[base]
+		int pair_value = PAIRS.at(row[base]);
+
+		// positions.find() is O(log n)
+		if (positions.find(pair_value) != positions.end()) 
+		{
+			int point = positions[pair_value];
+
+			// Swap elements if the point is valid
+			if (point > base + 1) 
 			{
-				int temp = row[base + 1];
-				row[base + 1] = row[point];
-				row[point] = temp;
-				base = base + 2;
+				// Swap() is O(1)
+				std::swap(row[base + 1], row[point]); 
 				swap_count++;
-				break;
+				// Update the positions map after the swap
+				positions[row[base + 1]] = base + 1;
+				positions[row[point]] = point;
 			}
 		}
 	}
@@ -131,12 +143,12 @@ int swap_vector(vector<int>& row)
 	return swap_count;
 }
 
-//test for duplicate input using sort function which is O(N log N) time
+//test for duplicate input using sort function which is O(N) time
 bool test_for_dups(vector<int>& row)
 {
 	vector<int> temp = row;
 	sort(temp.begin(), temp.end()); // O(N log N)
-	for (int i = 0; i < temp.size() - 1; i++) 
+	for (int i = 0; i < temp.size() - 1; i++) // O(N)
 	{
 		if (temp[i] == temp[i + 1])
 			return true;
