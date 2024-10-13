@@ -11,4 +11,5 @@ This C++ program determines the best starting city for a road trip based on dist
 ### Algorithm 3: 
 This C++ program manages and analyzes schedules for two individuals to identify available time slots for a meeting. It accepts input for each person's busy and free time intervals, parsing these times into a format suitable for processing. The program converts time strings to minutes and vice versa, computes the union of busy periods, finds the intersection of free periods, and then subtracts busy times from the free times to determine available slots. Finally, it checks if these available periods are long enough to accommodate a requested meeting duration, outputting the suitable time slots in a specified format. The program does not currently handle input errors.
 
-**Each folder includes the code and a pdf breakdown of the pseudocode, time complexity, and space complexity**
+---
+*Each folder includes the code and a pdf breakdown of the pseudocode, time complexity, and space complexity*
